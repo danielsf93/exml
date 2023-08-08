@@ -1,8 +1,8 @@
 <?php
 
-import('lib.pkp.classes.plugins.ImportExportPlugin');
+import('plugins.importexport.exml.lib.pkp.classes.plugins.ImportExportPlugin');
 
-class exml extends ImportExportPlugin {
+class exml extends ImportExportPlugin2 {
 	/**
 	 * Constructor
 	 */
@@ -123,22 +123,29 @@ class exml extends ImportExportPlugin {
 
 
 
-	function exportSubmissions($submissionIds) : array {
-		$submissionDao = new SubmissionDAO();
+	function exportSubmissions($submissionIds): array {
+		$submissionDao = DAORegistry::getDAO('SubmissionDAO');
 		$locale = AppLocale::getLocale();
-		$request = $this->getRequest();
-		$press = $request->getContext();
+		$request = Application::getRequest();
+		$context = $request->getContext();
 		$fileManager = new FileManager();
 		$result = array();
-
-		if (NULL !== $context) {
-			foreach ($submissionIds as $submissionId) {
-				/** @var Submission $submission */
-				$submission = $submissionDao->getById($submissionId);
-
-				 
+	
+		foreach ($submissionIds as $submissionId) {
+			$submission = $submissionDao->getById($submissionId, $context->getId());
+			if ($submission) {
+				$xmlContent = '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL;
+				$xmlContent .= '<publication>' . PHP_EOL;
+				$xmlContent .= '<title>' . htmlspecialchars($submission->getTitle($locale)) . '</title>' . PHP_EOL;
+				// Adicione aqui outras informações relevantes da publicação que deseja incluir no XML
+				$xmlContent .= '</publication>' . PHP_EOL;
+				$result[] = array(
+					'id' => $submissionId,
+					'xml' => $xmlContent
+				);
 			}
 		}
+	
 		return $result;
 	}
 

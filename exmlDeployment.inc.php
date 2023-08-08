@@ -1,8 +1,8 @@
 <?php
 
-import('lib.pkp.classes.plugins.importexport.PKPImportExportDeployment');
+import('plugins.importexport.exml.lib.pkp.classes.plugins.importexport.PKPImportExportDeployment');
 
-class exmlDeployment extends PKPImportExportDeployment {
+class exmlDeployment extends PKPImportExportDeployment2 {
 	/**
 	 * Constructor
 	 * @param $context Context
