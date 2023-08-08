@@ -123,29 +123,23 @@ class exml extends ImportExportPlugin {
 
 
 
-	function exportSubmissions($submissionIds, $context, $user, $opts = array()) {
-		$submissionDao = DAORegistry::getDAO('SubmissionDAO'); /* @var $submissionDao SubmissionDAO */
-		$filterDao = DAORegistry::getDAO('FilterDAO'); /* @var $filterDao FilterDAO */
-		$nativeExportFilters = $filterDao->getObjectsByGroup('monograph=>native-xml');
-		assert(count($nativeExportFilters) == 1); // Assert only a single serialization filter
-		$exportFilter = array_shift($nativeExportFilters);
-		$exportFilter->setDeployment(new NativeImportExportDeployment($context, $user));
-		$submissions = array();
-		foreach ($submissionIds as $submissionId) {
-			$submission = $submissionDao->getById($submissionId, $context->getId());
-			if ($submission) $submissions[] = $submission;
+	function exportSubmissions($submissionIds) : array {
+		$submissionDao = new SubmissionDAO();
+		$locale = AppLocale::getLocale();
+		$request = $this->getRequest();
+		$press = $request->getContext();
+		$fileManager = new FileManager();
+		$result = array();
+
+		if (NULL !== $context) {
+			foreach ($submissionIds as $submissionId) {
+				/** @var Submission $submission */
+				$submission = $submissionDao->getById($submissionId);
+
+				 
+			}
 		}
-		libxml_use_internal_errors(true);
-		$exportFilter->setOpts($opts);
-		$submissionXml = $exportFilter->execute($submissions, true);
-		$xml = $submissionXml->saveXml();
-		$errors = array_filter(libxml_get_errors(), function($a) {
-			return $a->level == LIBXML_ERR_ERROR || $a->level == LIBXML_ERR_FATAL;
-		});
-		if (!empty($errors)) {
-			$this->displayXMLValidationErrors($errors, $xml);
-		}
-		return $xml;
+		return $result;
 	}
 
 

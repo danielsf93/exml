@@ -38,5 +38,7 @@ class exmlDeployment extends PKPImportExportDeployment {
 		return 'publication_format';
 	}
 
-
+    function getSchemaFilename() {
+		return 'exml.xsd';
+	}
 }
