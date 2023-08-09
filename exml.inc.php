@@ -125,7 +125,7 @@ class exml extends ImportExportPlugin2 {
 
 	function exportSubmissions($submissions) {
 		$request = Application::getRequest();
-		return '<teste>' . 'estou aqui' . '</teste>';
+		return '<teste>' . date("F j, Y, g:i a") . '</teste>';
 
 
 
