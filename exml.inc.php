@@ -123,30 +123,15 @@ class exml extends ImportExportPlugin2 {
 
 
 
-	function exportSubmissions($submissionIds): array {
-		$submissionDao = DAORegistry::getDAO('SubmissionDAO');
-		$locale = AppLocale::getLocale();
+	function exportSubmissions($submissions) {
 		$request = Application::getRequest();
-		$context = $request->getContext();
-		$fileManager = new FileManager();
-		$result = array();
-	
-		foreach ($submissionIds as $submissionId) {
-			$submission = $submissionDao->getById($submissionId, $context->getId());
-			if ($submission) {
-				$xmlContent = '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL;
-				$xmlContent .= '<publication>' . PHP_EOL;
-				$xmlContent .= '<title>' . htmlspecialchars($submission->getTitle($locale)) . '</title>' . PHP_EOL;
-				// Adicione aqui outras informações relevantes da publicação que deseja incluir no XML
-				$xmlContent .= '</publication>' . PHP_EOL;
-				$result[] = array(
-					'id' => $submissionId,
-					'xml' => $xmlContent
-				);
-			}
-		}
-	
-		return $result;
+		return '<teste>' . 'estou aqui' . '</teste>';
+
+
+
+
+
+
 	}
 
 
