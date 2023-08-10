@@ -123,50 +123,66 @@ class exml extends ImportExportPlugin2 {
 
 	function exportSubmissions($submissions) {
 		$request = Application::getRequest();
-		$xmlContent = '<doi_batch xmlns="http://www.crossref.org/schema/4.3.7" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="4.3.7" xsi:schemaLocation="http://www.crossref.org/schema/4.3.7 http://www.crossref.org/schemas/crossref4.3.7.xsd">';
-	
-		// Head section
+		$xmlContent = '<?xml version="1.0" encoding="UTF-8"?>';
+		$xmlContent .= '<doi_batch xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"';
+		$xmlContent .= ' xsi:schemaLocation="http://www.crossref.org/schema/5.3.0 https://www.crossref.org/schemas/crossref5.3.0.xsd"';
+		$xmlContent .= ' xmlns="http://www.crossref.org/schema/5.3.0" xmlns:jats="http://www.ncbi.nlm.nih.gov/JATS1"';
+		$xmlContent .= ' xmlns:fr="http://www.crossref.org/fundref.xsd" xmlns:mml="http://www.w3.org/1998/Math/MathML"';
+		$xmlContent .= ' version="5.3.0">';
+		
 		$xmlContent .= '<head>';
-		$xmlContent .= '<doi_batch_id>20080305081200</doi_batch_id>';
-		$xmlContent .= '<timestamp>200815071200</timestamp>';
+		$xmlContent .= '<doi_batch_id>test.x</doi_batch_id>';
+		$xmlContent .= '<timestamp>2021010100000000</timestamp>';
 		$xmlContent .= '<depositor>';
-		$xmlContent .= '<depositor_name>Sample Master</depositor_name>';
-		$xmlContent .= '<email_address>support@crossref.org</email_address>';
+		$xmlContent .= '<depositor_name>Crossref</depositor_name>';
+		$xmlContent .= '<email_address>pfeeney@crossref.org</email_address>';
 		$xmlContent .= '</depositor>';
-		$xmlContent .= '<registrant>Sample Data</registrant>';
+		$xmlContent .= '<registrant>Society of Metadata Idealists</registrant>';
 		$xmlContent .= '</head>';
-	
-		// Body section
+		
 		$xmlContent .= '<body>';
-		$xmlContent .= '<book book_type="edited_book">';
-		$xmlContent .= '<book_set_metadata language="en">';
-		$xmlContent .= '<set_metadata>';
+		$xmlContent .= '<book book_type="monograph">';
+		$xmlContent .= '<book_metadata language="en">';
+		$xmlContent .= '<contributors>';
+		$xmlContent .= '<person_name sequence="first" contributor_role="author">';
+		$xmlContent .= '<given_name>Bob</given_name>';
+		$xmlContent .= '<surname>Surname</surname>';
+		$xmlContent .= '<affiliations>';
+		$xmlContent .= '<institution>';
+		$xmlContent .= '<institution_name>Northeast Cat Coalition</institution_name>';
+		$xmlContent .= '</institution>';
+		$xmlContent .= '<institution>';
+		$xmlContent .= '<institution_id type="ror">https://ror.org/05bp8ka05</institution_id>';
+		$xmlContent .= '</institution>';
+		$xmlContent .= '</affiliations>';
+		$xmlContent .= '</person_name>';
+		$xmlContent .= '</contributors>';
 		$xmlContent .= '<titles>';
-		$xmlContent .= '<title>Sample Set Title</title>';
+		$xmlContent .= '<title>Obese Cat Care</title>';
 		$xmlContent .= '</titles>';
-		$xmlContent .= '<isbn media_type="print">0 571 08989 5</isbn>';
-		$xmlContent .= '</set_metadata>';
-		$xmlContent .= '<titles>';
-		$xmlContent .= '<title>Sample Volume Title</title>';
-		$xmlContent .= '</titles>';
-		$xmlContent .= '<volume>1</volume>';
+		$xmlContent .= '<jats:abstract><jats:p>We are in the midst of a spatial flowering of knowledge that will become our stepping-stone to the quantum matrix itself. Who are we? Where on the great myth will we be recreated? Our conversations with other spiritual brothers and sisters have led to an evolving of supra-archetypal consciousness.</jats:p> </jats:abstract>';
+		$xmlContent .= '<edition_number>2</edition_number>';
 		$xmlContent .= '<publication_date media_type="print">';
-		$xmlContent .= '<year>2007</year>';
+		$xmlContent .= '<year>2009</year>';
 		$xmlContent .= '</publication_date>';
-		$xmlContent .= '<isbn media_type="print">0064410145</isbn>';
+		$xmlContent .= '<isbn media_type="electronic">1596680547</isbn>';
+		$xmlContent .= '<isbn media_type="print">9789000002191</isbn>';
 		$xmlContent .= '<publisher>';
-		$xmlContent .= '<publisher_name>Sample Publisher</publisher_name>';
+		$xmlContent .= '<publisher_name>Crossref</publisher_name>';
 		$xmlContent .= '</publisher>';
-		$xmlContent .= '</book_set_metadata>';
+		$xmlContent .= '<doi_data>';
+		$xmlContent .= '<doi>10.32013/9mIN5yS</doi>';
+		$xmlContent .= '<resource>https://www.crossref.org/xml-samples/</resource>';
+		$xmlContent .= '</doi_data>';
+		$xmlContent .= '</book_metadata>';
 		$xmlContent .= '</book>';
-	
-		// Continue adding other elements here
-	
 		$xmlContent .= '</body>';
+		
 		$xmlContent .= '</doi_batch>';
-	
+		
 		return $xmlContent;
 	}
+	
 	
 	
 	
