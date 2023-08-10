@@ -121,23 +121,44 @@ class exml extends ImportExportPlugin2 {
 		return 'exml';
 	}
 
-
-function exportSubmissions($submissions) {
-    $request = Application::getRequest();
-    $xmlContent = '<root>'; // Adicionando um elemento raiz
-
-    // ... Seu código existente ...
-
-    $xmlContent .= '<teste>' . date("F j, Y, g:i a") . '</teste>'; // Adicionando o primeiro elemento "teste"
-
-    $xmlContent .= '<testedois>'; // Adicionando o elemento "testedois"
-    $xmlContent .= 'isso é um teste';
-    $xmlContent .= '</testedois>';
-
-    $xmlContent .= '</root>'; // Fechando o elemento raiz
-
-    return $xmlContent;
-}
+	function exportSubmissions($submissions) {
+		$request = Application::getRequest();
+		$xmlContent = '<doi_batch xmlns="http://www.crossref.org/schema/4.3.7" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="4.3.7" xsi:schemaLocation="http://www.crossref.org/schema/4.3.7 http://www.crossref.org/schemas/crossref4.3.7.xsd">
+	<head>';
+		
+		$xmlContent .= '
+	<doi_batch_id>20080305081200</doi_batch_id>';
+		$xmlContent .= '
+	<timestamp>200815071200</timestamp>';
+		$xmlContent .= '
+	<depositor>';
+		$xmlContent .= '
+	<depositor_name>Sample Master</depositor_name>';
+		$xmlContent .= '
+	<email_address>support@crossref.org</email_address>';
+		$xmlContent .= '
+	</depositor>';
+		$xmlContent .= '
+	<registrant>Sample Data</registrant>';
+		$xmlContent .= '
+	</head>
+	<body>';
+	
+		$xmlContent .= '
+	<teste01>' . date("F j, Y, g:i a") . '</teste01>';
+		$xmlContent .= '
+	<testedois>isso é um teste</testedois>';
+	
+		// Adicione outros elementos aqui conforme necessário
+	
+		$xmlContent .= '
+	</body>
+	</doi_batch>';
+	
+		return $xmlContent;
+	}
+	
+	
 
 
 
