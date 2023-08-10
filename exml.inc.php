@@ -123,40 +123,52 @@ class exml extends ImportExportPlugin2 {
 
 	function exportSubmissions($submissions) {
 		$request = Application::getRequest();
-		$xmlContent = '<doi_batch xmlns="http://www.crossref.org/schema/4.3.7" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="4.3.7" xsi:schemaLocation="http://www.crossref.org/schema/4.3.7 http://www.crossref.org/schemas/crossref4.3.7.xsd">
-	<head>';
-		
-		$xmlContent .= '
-	<doi_batch_id>20080305081200</doi_batch_id>';
-		$xmlContent .= '
-	<timestamp>200815071200</timestamp>';
-		$xmlContent .= '
-	<depositor>';
-		$xmlContent .= '
-	<depositor_name>Sample Master</depositor_name>';
-		$xmlContent .= '
-	<email_address>support@crossref.org</email_address>';
-		$xmlContent .= '
-	</depositor>';
-		$xmlContent .= '
-	<registrant>Sample Data</registrant>';
-		$xmlContent .= '
-	</head>
-	<body>';
+		$xmlContent = '<doi_batch xmlns="http://www.crossref.org/schema/4.3.7" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="4.3.7" xsi:schemaLocation="http://www.crossref.org/schema/4.3.7 http://www.crossref.org/schemas/crossref4.3.7.xsd">';
 	
-		$xmlContent .= '
-	<teste01>' . date("F j, Y, g:i a") . '</teste01>';
-		$xmlContent .= '
-	<testedois>isso é um teste</testedois>';
+		// Head section
+		$xmlContent .= '<head>';
+		$xmlContent .= '<doi_batch_id>20080305081200</doi_batch_id>';
+		$xmlContent .= '<timestamp>200815071200</timestamp>';
+		$xmlContent .= '<depositor>';
+		$xmlContent .= '<depositor_name>Sample Master</depositor_name>';
+		$xmlContent .= '<email_address>support@crossref.org</email_address>';
+		$xmlContent .= '</depositor>';
+		$xmlContent .= '<registrant>Sample Data</registrant>';
+		$xmlContent .= '</head>';
 	
-		// Adicione outros elementos aqui conforme necessário
+		// Body section
+		$xmlContent .= '<body>';
+		$xmlContent .= '<book book_type="edited_book">';
+		$xmlContent .= '<book_set_metadata language="en">';
+		$xmlContent .= '<set_metadata>';
+		$xmlContent .= '<titles>';
+		$xmlContent .= '<title>Sample Set Title</title>';
+		$xmlContent .= '</titles>';
+		$xmlContent .= '<isbn media_type="print">0 571 08989 5</isbn>';
+		$xmlContent .= '</set_metadata>';
+		$xmlContent .= '<titles>';
+		$xmlContent .= '<title>Sample Volume Title</title>';
+		$xmlContent .= '</titles>';
+		$xmlContent .= '<volume>1</volume>';
+		$xmlContent .= '<publication_date media_type="print">';
+		$xmlContent .= '<year>2007</year>';
+		$xmlContent .= '</publication_date>';
+		$xmlContent .= '<isbn media_type="print">0064410145</isbn>';
+		$xmlContent .= '<publisher>';
+		$xmlContent .= '<publisher_name>Sample Publisher</publisher_name>';
+		$xmlContent .= '</publisher>';
+		$xmlContent .= '</book_set_metadata>';
+		$xmlContent .= '</book>';
 	
-		$xmlContent .= '
-	</body>
-	</doi_batch>';
+		// Continue adding other elements here
+	
+		$xmlContent .= '</body>';
+		$xmlContent .= '</doi_batch>';
 	
 		return $xmlContent;
 	}
+	
+	
 	
 	
 
