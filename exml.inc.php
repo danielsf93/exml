@@ -122,17 +122,22 @@ class exml extends ImportExportPlugin2 {
 	}
 
 
+function exportSubmissions($submissions) {
+    $request = Application::getRequest();
+    $xmlContent = '<root>'; // Adicionando um elemento raiz
 
-	function exportSubmissions($submissions) {
-		$request = Application::getRequest();
-		return '<teste>' . date("F j, Y, g:i a") . '</teste>';
+    // ... Seu código existente ...
 
+    $xmlContent .= '<teste>' . date("F j, Y, g:i a") . '</teste>'; // Adicionando o primeiro elemento "teste"
 
+    $xmlContent .= '<testedois>'; // Adicionando o elemento "testedois"
+    $xmlContent .= 'isso é um teste';
+    $xmlContent .= '</testedois>';
 
+    $xmlContent .= '</root>'; // Fechando o elemento raiz
 
-
-
-	}
+    return $xmlContent;
+}
 
 
 
