@@ -121,7 +121,7 @@ class exml extends ImportExportPlugin2 {
 		return 'exml';
 	}
 
-	function exportSubmissions($submissions) {
+	function exportSubmissions($submissions, $press) {
 		$request = Application::getRequest();
 		$xmlContent = '<?xml version="1.0" encoding="UTF-8"?>';
 		$xmlContent .= '<doi_batch xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"';
@@ -173,7 +173,11 @@ class exml extends ImportExportPlugin2 {
 					$xmlContent .= '<isbn media_type="electronic">1596680547</isbn>';
 					$xmlContent .= '<isbn media_type="print">9789000002191</isbn>';
 					$xmlContent .= '<publisher>';
-						$xmlContent .= '<publisher_name>Crossref</publisher_name>';
+						//tentando pegar o nome da editora:
+						$publisherName = htmlspecialchars($press->getName($press->getPrimaryLocale()));
+						$xmlContent .= '<publisher>';
+						$xmlContent .= '<publisher_name>' . $publisherName . '</publisher_name>';
+						$xmlContent .= '</publisher>';
 					$xmlContent .= '</publisher>';
 					$xmlContent .= '<doi_data>';
 						$xmlContent .= '<doi>10.32013/9mIN5yS</doi>';
