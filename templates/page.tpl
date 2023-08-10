@@ -14,7 +14,7 @@
 </script>
 <div id="importExportTabs" class="pkp_controllers_tab">
 	<ul>
-		<li><a href="#export-tab">{translate key="exportar xml"}</a></li>
+		<li><a href="#export-tab">{translate key="plugins.importexport.exml.exportSubmissions"}</a></li>
 	</ul>
 
 	<div id="export-tab">
@@ -56,7 +56,7 @@
 						</template>
 					</pkp-button>
 					<pkp-button @click="submit('#exportXmlForm')">
-						{translate key="plugins.importexport.native.exportSubmissions"}
+						{translate key="plugins.importexport.exml.exportSubmissions"}
 					</pkp-button>
 				{/fbvFormSection}
 			{/fbvFormArea}

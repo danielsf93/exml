@@ -1,0 +1,27 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-08-10T12:01:00-07:00\n"
+"PO-Revision-Date: 2023-08-10 23:15+0000\n"
+"Last-Translator: Daniel Silva Ferreira <daniel.ferreira@abcd.usp.br>\n"
+"Language-Team: Portuguese (Brazil)"
+"importexport-exml/pt_BR/>\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.9.1\n"
+
+msgid "plugins.importexport.exml.displayName"
+msgstr "Plugin eXML"
+
+msgid "plugins.importexport.exml.description"
+msgstr "Exportação de livros em formato XML para a crossref."
+
+msgid "plugins.importexport.exml.exportSubmissions"
+msgstr "Exportar submissões"
+
+
+

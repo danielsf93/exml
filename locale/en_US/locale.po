@@ -1,0 +1,22 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2023-08-10T07:09:53-07:00\n"
+"PO-Revision-Date: 2023-08-10T07:09:53-07:00\n"
+"Language: \n"
+
+msgid "plugins.importexport.exml.displayName"
+msgstr "eXML Plugin"
+
+msgid "plugins.importexport.exml.description"
+msgstr "Export books in XML format to crossref."
+
+msgid "plugins.importexport.exml.exportSubmissions"
+msgstr "Export submissions"
+

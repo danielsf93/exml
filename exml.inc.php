@@ -103,7 +103,7 @@ class exml extends ImportExportPlugin2 {
 	 * @return string
 	 */
 	function getDisplayName() {
-		return __('exml');
+		return __('plugins.importexport.exml.displayName');
 	}
 
 	/**
@@ -111,7 +111,7 @@ class exml extends ImportExportPlugin2 {
 	 * @return string
 	 */
 	function getDescription() {
-		return __('exml');
+		return __('plugins.importexport.exml.description');
 	}
 
 	/**
