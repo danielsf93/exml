@@ -130,19 +130,16 @@ class exml extends ImportExportPlugin2 {
 			if ($submission) $submissions[] = $submission;
 		}
 	
-		// Resto do código ...
+		
 		
 		foreach ($submissions as $submission) {
-			// Obtenha o título da submissão
+			// Obtendo o título da submissão
 			$submissionTitle = $submission->getLocalizedTitle();
 			
-			// Continue com o restante do código para a geração do XML
+			
 		}
 		
-		// Resto do código ...
-		
-
-
+		//início estrutura xml
 
 		$xmlContent = '<?xml version="1.0" encoding="UTF-8"?>';
 		$xmlContent .= '<doi_batch xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"';
@@ -205,7 +202,17 @@ class exml extends ImportExportPlugin2 {
 				$xmlContent .= '</book_metadata>';
 			$xmlContent .= '</book>';
 		$xmlContent .= '</body>';
+
+/////inicio testes
 		
+		$xmlContent .= '<teste>';
+		$xmlContent .= 'AQUIIII';
+		$xmlContent .= '</teste>';
+		
+
+////funal testes
+
+
 		$xmlContent .= '</doi_batch>';
 
 

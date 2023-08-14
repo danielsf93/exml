@@ -31,7 +31,7 @@
 						<div class="listPanel__itemSummary">
 							<label>
 								<input
-									type="checkbox"
+									type="radio"
 									name="selectedSubmissions[]"
 									:value="item.id"
 									v-model="selectedSubmissions"
