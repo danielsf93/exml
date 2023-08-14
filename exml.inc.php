@@ -121,8 +121,28 @@ class exml extends ImportExportPlugin2 {
 		return 'exml';
 	}
 
-	function exportSubmissions($submissions, $press) {
-		$request = Application::getRequest();
+	function exportSubmissions($submissionIds, $context, $user) {
+		$submissionDao = DAORegistry::getDAO('SubmissionDAO'); /* @var $submissionDao SubmissionDAO */
+		$submissions = array();
+		foreach ($submissionIds as $submissionId) {
+			$submission = $submissionDao->getById($submissionId, $context->getId());
+			if ($submission) $submissions[] = $submission;
+		}
+	
+		// Resto do código ...
+		
+		foreach ($submissions as $submission) {
+			// Obtenha o título da submissão
+			$submissionTitle = $submission->getLocalizedTitle();
+			
+			// Continue com o restante do código para a geração do XML
+		}
+		
+		// Resto do código ...
+		
+
+
+
 		$xmlContent = '<?xml version="1.0" encoding="UTF-8"?>';
 		$xmlContent .= '<doi_batch xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"';
 		$xmlContent .= ' xsi:schemaLocation="http://www.crossref.org/schema/5.3.0 https://www.crossref.org/schemas/crossref5.3.0.xsd"';
@@ -162,7 +182,7 @@ class exml extends ImportExportPlugin2 {
 					$xmlContent .= '</contributors>';
 					//titles
 					$xmlContent .= '<titles>';
-						$xmlContent .= '<title>Obese Cat Care</title>';
+						$xmlContent .= '<title>' . htmlspecialchars($submissionTitle) . '</title>';
 					$xmlContent .= '</titles>';
 					//abstract - arrumar a quebra <jats:p>
 					$xmlContent .= '<jats:abstract><jats:p>We are in the midst of a spatial flowering of knowledge that will become our stepping-stone to the quantum matrix itself. Who are we? Where on the great myth will we be recreated? Our conversations with other spiritual brothers and sisters have led to an evolving of supra-archetypal consciousness.</jats:p> </jats:abstract>';
@@ -174,9 +194,9 @@ class exml extends ImportExportPlugin2 {
 					$xmlContent .= '<isbn media_type="print">9789000002191</isbn>';
 					$xmlContent .= '<publisher>';
 						//tentando pegar o nome da editora:
-						$publisherName = htmlspecialchars($press->getName($press->getPrimaryLocale()));
+						//$publisherName = htmlspecialchars($press->getName($press->getPrimaryLocale()));
 						$xmlContent .= '<publisher>';
-						$xmlContent .= '<publisher_name>' . $publisherName . '</publisher_name>';
+						$xmlContent .= '<publisher_name>' . 'xablau' . '</publisher_name>';
 						$xmlContent .= '</publisher>';
 					$xmlContent .= '</publisher>';
 					$xmlContent .= '<doi_data>';
@@ -188,13 +208,14 @@ class exml extends ImportExportPlugin2 {
 		$xmlContent .= '</body>';
 		
 		$xmlContent .= '</doi_batch>';
-		
+
+
+
+
+
+
 		return $xmlContent;
 	}
-	
-	
-	
-	
 	
 
 
