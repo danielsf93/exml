@@ -121,6 +121,7 @@ class exml extends ImportExportPlugin2 {
 		return 'exml';
 	}
 
+	
 	function exportSubmissions($submissionIds, $context, $user) {
 		$submissionDao = DAORegistry::getDAO('SubmissionDAO'); /* @var $submissionDao SubmissionDAO */
 		$submissions = array();
@@ -192,13 +193,11 @@ class exml extends ImportExportPlugin2 {
 					$xmlContent .= '</publication_date>';
 					$xmlContent .= '<isbn media_type="electronic">1596680547</isbn>';
 					$xmlContent .= '<isbn media_type="print">9789000002191</isbn>';
-					$xmlContent .= '<publisher>';
 						//tentando pegar o nome da editora:
 						//$publisherName = htmlspecialchars($press->getName($press->getPrimaryLocale()));
 						$xmlContent .= '<publisher>';
-						$xmlContent .= '<publisher_name>' . 'xablau' . '</publisher_name>';
+							$xmlContent .= '<publisher_name>' . 'xablau' . '</publisher_name>';
 						$xmlContent .= '</publisher>';
-					$xmlContent .= '</publisher>';
 					$xmlContent .= '<doi_data>';
 						$xmlContent .= '<doi>10.32013/9mIN5yS</doi>';
 						$xmlContent .= '<resource>https://www.crossref.org/xml-samples/</resource>';
