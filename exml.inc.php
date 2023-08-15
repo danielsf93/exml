@@ -133,15 +133,39 @@ class exml extends ImportExportPlugin2 {
 		}
 	
 		
+/********************************************		FOREACH'S	********************************************/
+
+
+
+foreach ($submissions as $submission) {
+	// Obtendo o título da submissão
+	$submissionTitle = $submission->getLocalizedFullTitle();
+
+	// Obtendo o nome do autor
+	$authorNames = array();
+	$authors = $submission->getAuthors();
+	foreach ($authors as $author) {
+		$givenName = $author->getLocalizedGivenName();
+		$surname = $author->getLocalizedFamilyName();
+		$authorNames[] = $givenName . ' ' . $surname;
+	}
+	$authorName = implode(', ', $authorNames);
+
+
+
+
+
+//---início estrutura xml
+//---head
+//---body
+//---contributors
+//---titles
+
+
 		
-		foreach ($submissions as $submission) {
-			// Obtendo o título da submissão
-			$submissionTitle = $submission->getLocalizedTitle();
-			
-			
-		}
 		
-		//início estrutura xml
+/********************************************		ESTRUTURA XML		********************************************/		
+		//---início estrutura xml
 
 		$xmlContent = '<?xml version="1.0" encoding="UTF-8"?>';
 		$xmlContent .= '<doi_batch xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"';
@@ -165,36 +189,7 @@ class exml extends ImportExportPlugin2 {
 		$xmlContent .= '<body>';
 			$xmlContent .= '<book book_type="monograph">';
 				$xmlContent .= '<book_metadata language="en">';
-					
-				
-				
-				
-				
-				
-				
-				
-				
 				//---contributors
-
-foreach ($submissions as $submission) {
-	// Obtendo o título da submissão
-	$submissionTitle = $submission->getLocalizedTitle();
-
-	// Obtendo o nome do autor
-	$authorNames = array();
-	$authors = $submission->getAuthors();
-	foreach ($authors as $author) {
-		$givenName = $author->getLocalizedGivenName();
-		$surname = $author->getLocalizedFamilyName();
-		$authorNames[] = $givenName . ' ' . $surname;
-	}
-	$authorName = implode(', ', $authorNames);
-
-
-
-
-
-
 			$xmlContent .= '<contributors>';
 				$xmlContent .= '<person_name sequence="first" contributor_role="author">';
 					$xmlContent .= '<given_name>' . htmlspecialchars($givenName) . '</given_name>';
@@ -210,12 +205,7 @@ foreach ($submissions as $submission) {
 				$xmlContent .= '</person_name>';
 			$xmlContent .= '</contributors>';
 					
-					
-					
-					
-					
-					
-					
+			
 					
 					//---titles
 					$xmlContent .= '<titles>';
@@ -254,7 +244,7 @@ foreach ($submissions as $submission) {
 
 
 		
-////funal testes
+////fInal testes
 		}
 
 		$xmlContent .= '</doi_batch>';
