@@ -121,6 +121,8 @@ class exml extends ImportExportPlugin2 {
 		return 'exml';
 	}
 
+		
+
 	
 	function exportSubmissions($submissionIds, $context, $user) {
 		$submissionDao = DAORegistry::getDAO('SubmissionDAO'); /* @var $submissionDao SubmissionDAO */
@@ -204,14 +206,42 @@ class exml extends ImportExportPlugin2 {
 		$xmlContent .= '</body>';
 
 /////inicio testes
-		
+
 		$xmlContent .= '<teste>';
-		$xmlContent .= 'AQUIIII';
+		$xmlContent .= 'aaa'. 'isso aqui é só um teste' . 'bbb';
 		$xmlContent .= '</teste>';
 		
 
-////funal testes
 
+
+
+
+		foreach ($submissions as $submission) {
+			// Obtendo o título da submissão
+			$submissionTitle = $submission->getLocalizedTitle();
+		
+			// Obtendo o nome do autor
+			$authorNames = array();
+			$authors = $submission->getAuthors();
+			foreach ($authors as $author) {
+				$givenName = $author->getFullName();
+				$surname = $author->getFullName();
+				$authorNames[] = $givenName . ' ' . $surname;
+			}
+			$authorName = implode(', ', $authorNames);
+		
+			// ... Outro código aqui ...
+		
+			
+			$xmlContent .= '<contributors>';
+			$xmlContent .= '<person_name sequence="first" contributor_role="author">';
+			$xmlContent .= '<given_name>' . htmlspecialchars($givenName) . '</given_name>';
+			$xmlContent .= '<surname>' . htmlspecialchars($surname) . '</surname>';
+			// ...
+			$xmlContent .= '</person_name>';
+			$xmlContent .= '</contributors>';
+////funal testes
+		}
 
 		$xmlContent .= '</doi_batch>';
 
