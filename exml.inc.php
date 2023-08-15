@@ -141,25 +141,19 @@ foreach ($submissions as $submission) {
 	// Obtendo o título da submissão
 	$submissionTitle = $submission->getLocalizedFullTitle();
 
-	// Obtendo o nome do autor
+	// Obtendo dados do autor
 	$authorNames = array();
 	$authors = $submission->getAuthors();
 	foreach ($authors as $author) {
 		$givenName = $author->getLocalizedGivenName();
 		$surname = $author->getLocalizedFamilyName();
+		$afiliation = $author->getLocalizedAffiliation();
 		$authorNames[] = $givenName . ' ' . $surname;
 	}
 	$authorName = implode(', ', $authorNames);
 
 
 
-
-
-//---início estrutura xml
-//---head
-//---body
-//---contributors
-//---titles
 
 
 		
@@ -195,9 +189,18 @@ foreach ($submissions as $submission) {
 					$xmlContent .= '<given_name>' . htmlspecialchars($givenName) . '</given_name>';
 					$xmlContent .= '<surname>' . htmlspecialchars($surname) . '</surname>';
 					$xmlContent .= '<affiliations>';
+
+
+
+
 						$xmlContent .= '<institution>';
-							$xmlContent .= '<institution_name>Northeast Cat Coalition</institution_name>';
+							$xmlContent .= '<institution_name>' . htmlspecialchars($afiliation) . '</institution_name>';
 						$xmlContent .= '</institution>';
+
+
+
+
+
 						$xmlContent .= '<institution>';
 							$xmlContent .= '<institution_id type="ror">https://ror.org/05bp8ka05</institution_id>';
 						$xmlContent .= '</institution>';
