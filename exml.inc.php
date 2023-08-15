@@ -140,6 +140,9 @@ class exml extends ImportExportPlugin2 {
 foreach ($submissions as $submission) {
 	// Obtendo o título da submissão
 	$submissionTitle = $submission->getLocalizedFullTitle();
+	
+	$abstract = $submission->getLocalizedAbstract();
+
 
 	// Obtendo dados do autor
 	$authorNames = array();
@@ -152,9 +155,7 @@ foreach ($submissions as $submission) {
 	}
 	$authorName = implode(', ', $authorNames);
 
-
-
-
+	
 
 		
 		
@@ -189,20 +190,11 @@ foreach ($submissions as $submission) {
 					$xmlContent .= '<given_name>' . htmlspecialchars($givenName) . '</given_name>';
 					$xmlContent .= '<surname>' . htmlspecialchars($surname) . '</surname>';
 					$xmlContent .= '<affiliations>';
-
-
-
-
 						$xmlContent .= '<institution>';
 							$xmlContent .= '<institution_name>' . htmlspecialchars($afiliation) . '</institution_name>';
 						$xmlContent .= '</institution>';
-
-
-
-
-
 						$xmlContent .= '<institution>';
-							$xmlContent .= '<institution_id type="ror">https://ror.org/05bp8ka05</institution_id>';
+							$xmlContent .= '<institution_id type="ror">https://ror.org/036rp1748</institution_id>';
 						$xmlContent .= '</institution>';
 					$xmlContent .= '</affiliations>';
 				$xmlContent .= '</person_name>';
@@ -214,8 +206,9 @@ foreach ($submissions as $submission) {
 					$xmlContent .= '<titles>';
 						$xmlContent .= '<title>' . htmlspecialchars($submissionTitle) . '</title>';
 					$xmlContent .= '</titles>';
-					//----abstract - arrumar a quebra <jats:p>
-					$xmlContent .= '<jats:abstract><jats:p>We are in the midst of a spatial flowering of knowledge that will become our stepping-stone to the quantum matrix itself. Who are we? Where on the great myth will we be recreated? Our conversations with other spiritual brothers and sisters have led to an evolving of supra-archetypal consciousness.</jats:p> </jats:abstract>';
+					//----abstract 
+					$xmlContent .= '<jats:abstract> <jats:p>' . htmlspecialchars($abstract) . '</jats:p> </jats:abstract>';
+
 					$xmlContent .= '<edition_number>2</edition_number>';
 					$xmlContent .= '<publication_date media_type="print">';
 						$xmlContent .= '<year>2009</year>';
