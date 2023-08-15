@@ -150,7 +150,7 @@ class exml extends ImportExportPlugin2 {
 		$xmlContent .= ' xmlns:fr="http://www.crossref.org/fundref.xsd" xmlns:mml="http://www.w3.org/1998/Math/MathML"';
 		$xmlContent .= ' version="5.3.0">';
 		
-		//head
+		//---head
 		$xmlContent .= '<head>';
 			$xmlContent .= '<doi_batch_id>test.x</doi_batch_id>';
 			$xmlContent .= '<timestamp>2021010100000000</timestamp>';
@@ -161,30 +161,67 @@ class exml extends ImportExportPlugin2 {
 			$xmlContent .= '<registrant>Society of Metadata Idealists</registrant>';
 		$xmlContent .= '</head>';
 		
-		//body
+		//---body
 		$xmlContent .= '<body>';
 			$xmlContent .= '<book book_type="monograph">';
 				$xmlContent .= '<book_metadata language="en">';
-					//contributors
-					$xmlContent .= '<contributors>';
-						$xmlContent .= '<person_name sequence="first" contributor_role="author">';
-							$xmlContent .= '<given_name>Bob</given_name>';
-							$xmlContent .= '<surname>Surname</surname>';
-							$xmlContent .= '<affiliations>';
-								$xmlContent .= '<institution>';
-									$xmlContent .= '<institution_name>Northeast Cat Coalition</institution_name>';
-								$xmlContent .= '</institution>';
-								$xmlContent .= '<institution>';
-									$xmlContent .= '<institution_id type="ror">https://ror.org/05bp8ka05</institution_id>';
-								$xmlContent .= '</institution>';
-							$xmlContent .= '</affiliations>';
-						$xmlContent .= '</person_name>';
-					$xmlContent .= '</contributors>';
-					//titles
+					
+				
+				
+				
+				
+				
+				
+				
+				
+				//---contributors
+
+foreach ($submissions as $submission) {
+	// Obtendo o título da submissão
+	$submissionTitle = $submission->getLocalizedTitle();
+
+	// Obtendo o nome do autor
+	$authorNames = array();
+	$authors = $submission->getAuthors();
+	foreach ($authors as $author) {
+		$givenName = $author->getLocalizedGivenName();
+		$surname = $author->getLocalizedFamilyName();
+		$authorNames[] = $givenName . ' ' . $surname;
+	}
+	$authorName = implode(', ', $authorNames);
+
+
+
+
+
+
+			$xmlContent .= '<contributors>';
+				$xmlContent .= '<person_name sequence="first" contributor_role="author">';
+					$xmlContent .= '<given_name>' . htmlspecialchars($givenName) . '</given_name>';
+					$xmlContent .= '<surname>' . htmlspecialchars($surname) . '</surname>';
+					$xmlContent .= '<affiliations>';
+						$xmlContent .= '<institution>';
+							$xmlContent .= '<institution_name>Northeast Cat Coalition</institution_name>';
+						$xmlContent .= '</institution>';
+						$xmlContent .= '<institution>';
+							$xmlContent .= '<institution_id type="ror">https://ror.org/05bp8ka05</institution_id>';
+						$xmlContent .= '</institution>';
+					$xmlContent .= '</affiliations>';
+				$xmlContent .= '</person_name>';
+			$xmlContent .= '</contributors>';
+					
+					
+					
+					
+					
+					
+					
+					
+					//---titles
 					$xmlContent .= '<titles>';
 						$xmlContent .= '<title>' . htmlspecialchars($submissionTitle) . '</title>';
 					$xmlContent .= '</titles>';
-					//abstract - arrumar a quebra <jats:p>
+					//----abstract - arrumar a quebra <jats:p>
 					$xmlContent .= '<jats:abstract><jats:p>We are in the midst of a spatial flowering of knowledge that will become our stepping-stone to the quantum matrix itself. Who are we? Where on the great myth will we be recreated? Our conversations with other spiritual brothers and sisters have led to an evolving of supra-archetypal consciousness.</jats:p> </jats:abstract>';
 					$xmlContent .= '<edition_number>2</edition_number>';
 					$xmlContent .= '<publication_date media_type="print">';
@@ -216,30 +253,7 @@ class exml extends ImportExportPlugin2 {
 
 
 
-		foreach ($submissions as $submission) {
-			// Obtendo o título da submissão
-			$submissionTitle = $submission->getLocalizedTitle();
 		
-			// Obtendo o nome do autor
-			$authorNames = array();
-			$authors = $submission->getAuthors();
-			foreach ($authors as $author) {
-				$givenName = $author->getFullName();
-				$surname = $author->getFullName();
-				$authorNames[] = $givenName . ' ' . $surname;
-			}
-			$authorName = implode(', ', $authorNames);
-		
-			// ... Outro código aqui ...
-		
-			
-			$xmlContent .= '<contributors>';
-			$xmlContent .= '<person_name sequence="first" contributor_role="author">';
-			$xmlContent .= '<given_name>' . htmlspecialchars($givenName) . '</given_name>';
-			$xmlContent .= '<surname>' . htmlspecialchars($surname) . '</surname>';
-			// ...
-			$xmlContent .= '</person_name>';
-			$xmlContent .= '</contributors>';
 ////funal testes
 		}
 
