@@ -145,6 +145,13 @@ foreach ($submissions as $submission) {
 	$abstract = $submission->getLocalizedAbstract();
 	$doi = $submission->getStoredPubId('doi'); 
 	$publicationUrl = $request->url($context->getPath(), 'catalog', 'book', array($submission->getId()));	
+	// aqui retorna ano mes dia $publicationYear = $submission->getDatePublished();
+	$publicationDate = $submission->getDatePublished();
+	$publicationYear = date('Y', strtotime($publicationDate));
+
+	// aqui retorna xx_XX$submissionLanguage = $submission->getLocale();
+	$submissionLanguage = substr($submission->getLocale(), 0, 2); //aqui retorna xx
+
 	
 	// Obtendo dados do autor
 	$authorNames = array();
@@ -185,7 +192,7 @@ foreach ($submissions as $submission) {
 		//---body
 		$xmlContent .= '<body>';
 			$xmlContent .= '<book book_type="monograph">';
-				$xmlContent .= '<book_metadata language="en">';
+				$xmlContent .= '<book_metadata language="' . htmlspecialchars($submissionLanguage) . '">';
 				//---contributors
 			$xmlContent .= '<contributors>';
 				$xmlContent .= '<person_name sequence="first" contributor_role="author">';
@@ -213,7 +220,7 @@ foreach ($submissions as $submission) {
 
 					$xmlContent .= '<edition_number>2</edition_number>';
 					$xmlContent .= '<publication_date media_type="print">';
-						$xmlContent .= '<year>2009</year>';
+						$xmlContent .= '<year>' . htmlspecialchars($publicationYear) . '</year>';
 					$xmlContent .= '</publication_date>';
 					$xmlContent .= '<isbn media_type="electronic">1596680547</isbn>';
 					$xmlContent .= '<isbn media_type="print">9789000002191</isbn>';
