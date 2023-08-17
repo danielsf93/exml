@@ -68,7 +68,8 @@ class exml extends ImportExportPlugin2 {
 					$exportXml = $this->exportSubmissions(
 						(array) $request->getUserVar('selectedSubmissions'),
 						$request->getContext(),
-						$request->getUser()
+						$request->getUser(),
+						$request
 					);
 					import('lib.pkp.classes.file.FileManager');
 					$fileManager = new FileManager();
@@ -124,7 +125,7 @@ class exml extends ImportExportPlugin2 {
 		
 
 	
-	function exportSubmissions($submissionIds, $context, $user) {
+	function exportSubmissions($submissionIds, $context, $user, $request) {
 		$submissionDao = DAORegistry::getDAO('SubmissionDAO'); /* @var $submissionDao SubmissionDAO */
 		$submissions = array();
 		foreach ($submissionIds as $submissionId) {
@@ -143,8 +144,8 @@ foreach ($submissions as $submission) {
 	
 	$abstract = $submission->getLocalizedAbstract();
 	$doi = $submission->getStoredPubId('doi'); 
-	$publicationUrl = $_SERVER['HTTP_HOST'] ;
-
+	$publicationUrl = $request->url($context->getPath(), 'catalog', 'book', array($submission->getId()));	
+	
 	// Obtendo dados do autor
 	$authorNames = array();
 	$authors = $submission->getAuthors();
