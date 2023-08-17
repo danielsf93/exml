@@ -142,7 +142,8 @@ foreach ($submissions as $submission) {
 	$submissionTitle = $submission->getLocalizedFullTitle();
 	
 	$abstract = $submission->getLocalizedAbstract();
-
+	$doi = $submission->getStoredPubId('doi'); 
+	$publicationUrl = $_SERVER['HTTP_HOST'] ;
 
 	// Obtendo dados do autor
 	$authorNames = array();
@@ -221,8 +222,8 @@ foreach ($submissions as $submission) {
 							$xmlContent .= '<publisher_name>' . 'xablau' . '</publisher_name>';
 						$xmlContent .= '</publisher>';
 					$xmlContent .= '<doi_data>';
-						$xmlContent .= '<doi>10.32013/9mIN5yS</doi>';
-						$xmlContent .= '<resource>https://www.crossref.org/xml-samples/</resource>';
+						$xmlContent .= '<doi>' . htmlspecialchars($doi) . '</doi>';
+						$xmlContent .= '<resource>' . htmlspecialchars($publicationUrl) . '</resource>';
 					$xmlContent .= '</doi_data>';
 				$xmlContent .= '</book_metadata>';
 			$xmlContent .= '</book>';
@@ -231,7 +232,7 @@ foreach ($submissions as $submission) {
 /////inicio testes
 
 		$xmlContent .= '<teste>';
-		$xmlContent .= 'aaa'. 'isso aqui é só um teste' . 'bbb';
+		$xmlContent .= 'aaa'. 'testeee' . 'bbb';
 		$xmlContent .= '</teste>';
 		
 
