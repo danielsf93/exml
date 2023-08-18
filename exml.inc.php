@@ -237,11 +237,11 @@ foreach ($submissions as $submission) {
 			$xmlContent .= '</book>';
 		$xmlContent .= '</body>';
 
-/////inicio testes
+/////tag para testes
 
-		$xmlContent .= '<teste>';
-		$xmlContent .= 'aaa'. 'testeee' . 'bbb';
-		$xmlContent .= '</teste>';
+		//$xmlContent .= '<teste>';
+		//$xmlContent .= 'aaa'. 'testeee' . 'bbb';
+	//	$xmlContent .= '</teste>';
 		
 
 
@@ -249,7 +249,7 @@ foreach ($submissions as $submission) {
 
 
 		
-////fInal testes
+////fInal final tag para testes
 		}
 
 		$xmlContent .= '</doi_batch>';
