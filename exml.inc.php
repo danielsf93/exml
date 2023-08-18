@@ -128,6 +128,9 @@ class exml extends ImportExportPlugin2 {
 	function exportSubmissions($submissionIds, $context, $user, $request) {
 		$submissionDao = DAORegistry::getDAO('SubmissionDAO'); /* @var $submissionDao SubmissionDAO */
 		$submissions = array();
+		$app = new Application();
+		$request = $app->getRequest();
+		$press = $request->getContext();
 		foreach ($submissionIds as $submissionId) {
 			$submission = $submissionDao->getById($submissionId, $context->getId());
 			if ($submission) $submissions[] = $submission;
@@ -151,7 +154,8 @@ foreach ($submissions as $submission) {
 
 	// aqui retorna xx_XX$submissionLanguage = $submission->getLocale();
 	$submissionLanguage = substr($submission->getLocale(), 0, 2); //aqui retorna xx
-
+	$publisherName = $press->getData('publisher');
+	$registrant = $press->getLocalizedName();
 	
 	// Obtendo dados do autor
 	$authorNames = array();
@@ -186,7 +190,7 @@ foreach ($submissions as $submission) {
 				$xmlContent .= '<depositor_name>Crossref</depositor_name>';
 				$xmlContent .= '<email_address>pfeeney@crossref.org</email_address>';
 			$xmlContent .= '</depositor>';
-			$xmlContent .= '<registrant>Society of Metadata Idealists</registrant>';
+			$xmlContent .= '<registrant>' . htmlspecialchars($registrant) . '</registrant>';
 		$xmlContent .= '</head>';
 		
 		//---body
@@ -224,10 +228,8 @@ foreach ($submissions as $submission) {
 					$xmlContent .= '</publication_date>';
 					$xmlContent .= '<isbn media_type="electronic">1596680547</isbn>';
 					$xmlContent .= '<isbn media_type="print">9789000002191</isbn>';
-						//tentando pegar o nome da editora:
-						//$publisherName = htmlspecialchars($press->getName($press->getPrimaryLocale()));
 						$xmlContent .= '<publisher>';
-							$xmlContent .= '<publisher_name>' . 'xablau' . '</publisher_name>';
+							$xmlContent .= '<publisher_name>' . htmlspecialchars($publisherName) . '</publisher_name>';
 						$xmlContent .= '</publisher>';
 					$xmlContent .= '<doi_data>';
 						$xmlContent .= '<doi>' . htmlspecialchars($doi) . '</doi>';
@@ -239,9 +241,9 @@ foreach ($submissions as $submission) {
 
 /////tag para testes
 
-		//$xmlContent .= '<teste>';
-		//$xmlContent .= 'aaa'. 'testeee' . 'bbb';
-	//	$xmlContent .= '</teste>';
+	//$xmlContent .= '<teste>';
+	//$xmlContent .= 'aaa' . htmlspecialchars($publisherName) . 'bbb';
+	//$xmlContent .= '</teste>';
 		
 
 
