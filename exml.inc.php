@@ -156,6 +156,7 @@ foreach ($submissions as $submission) {
 	$submissionLanguage = substr($submission->getLocale(), 0, 2); //aqui retorna xx
 	$publisherName = $press->getData('publisher');
 	$registrant = $press->getLocalizedName();
+	$editionNumber = $submission->getSeriesPosition();
 	
 	// Obtendo dados do autor
 	$authorNames = array();
@@ -222,7 +223,7 @@ foreach ($submissions as $submission) {
 					//----abstract 
 					$xmlContent .= '<jats:abstract> <jats:p>' . htmlspecialchars($abstract) . '</jats:p> </jats:abstract>';
 
-					$xmlContent .= '<edition_number>2</edition_number>';
+					$xmlContent .= '<edition_number>' . htmlspecialchars($editionNumber) .  '</edition_number>';
 					$xmlContent .= '<publication_date media_type="print">';
 						$xmlContent .= '<year>' . htmlspecialchars($publicationYear) . '</year>';
 					$xmlContent .= '</publication_date>';
