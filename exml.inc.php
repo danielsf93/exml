@@ -26,6 +26,89 @@ class exml extends ImportExportPlugin2 {
 
 
 
+/////
+
+
+function getContextSpecificPluginSettingsFile() {
+	return $this->getPluginPath() . '/settings.xml';
+}
+
+
+public function getContents($templateMgr, $request = null)
+	{
+		$context = Application::get()->getRequest()->getContext();
+		$contextId = ($context && $context->getId()) ? $context->getId() : CONTEXT_SITE;
+		$templateMgr->assign('campo01', $this->getSetting($contextId, 'campo01'));
+		$templateMgr->assign('campo02', $this->getSetting($contextId, 'campo02'));
+
+		return parent::getContents($templateMgr, $request);
+	}
+
+
+	public function getActions($request, $actionArgs)
+	{
+		$actions = parent::getActions($request, $actionArgs);
+		if (!$this->getEnabled()) {
+			return $actions;
+		}
+		$router = $request->getRouter();
+		import('lib.pkp.classes.linkAction.request.AjaxModal');
+		$linkAction = new LinkAction(
+			'settings',
+			new AjaxModal(
+				$router->url(
+					$request,
+					null,
+					null,
+					'manage',
+					null,
+					array(
+						'verb' => 'settings',
+						'plugin' => $this->getName(),
+						'category' => 'importexport'
+					)
+				),
+				$this->getDisplayName()
+			),
+			__('manager.plugins.settings'),
+			null
+		);
+		array_unshift($actions, $linkAction);
+		return $actions;
+	}
+
+
+	public function manage($args, $request)
+	{
+		switch ($request->getUserVar('verb')) {
+			case 'settings':
+				$this->import('exmlSettingsForm');
+				$form = new exmlSettingsForm($this);
+				if (!$request->getUserVar('save')) {
+					$form->initData();
+					return new JSONMessage(true, $form->fetch($request));
+				}
+				$form->readInputData();
+				if ($form->validate()) {
+					$form->execute();
+					return new JSONMessage(true);
+				}
+		}
+		return parent::manage($args, $request);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -62,7 +145,7 @@ class exml extends ImportExportPlugin2 {
 				$templateMgr->assign([
 					'pageComponent' => 'ImportExportPage',
 				]);
-				$templateMgr->display($this->getTemplateResource('page.tpl'));
+				$templateMgr->display($this->getTemplateResource('index.tpl'));
 				break;
 				case 'export':
 					$exportXml = $this->exportSubmissions(
