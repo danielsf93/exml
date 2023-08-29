@@ -148,16 +148,19 @@ foreach ($submissions as $submission) {
 	
 	$abstract = $submission->getLocalizedAbstract();
 	$doi = $submission->getStoredPubId('doi'); 
-	$publicationUrl = $request->url($context->getPath(), 'catalog', 'book', array($submission->getId()));	
+	$publicationUrl = $request->url($context->getPath(), 'catalog', 'book', array($submission->getId()));
+	$copyright = $submission->getLocalizedcopyrightHolder();
 	// aqui retorna ano mes dia $publicationYear = $submission->getDatePublished();
 	$publicationDate = $submission->getDatePublished();
 	$publicationYear = date('Y', strtotime($publicationDate));
+	$publicationMonth = date('m', strtotime($publicationDate));
+	$publicationDay = date('d', strtotime($publicationDate));
 
 	// aqui retorna xx_XX$submissionLanguage = $submission->getLocale();
 	$submissionLanguage = substr($submission->getLocale(), 0, 2); //aqui retorna xx
 	$publisherName = $press->getData('publisher');
 	$registrant = $press->getLocalizedName();
-	$editionNumber = $submission->getSeriesPosition();
+	//$editionNumber = $submission->getSeriesPosition();
 	
 	// Obtendo dados do autor
 	$authorNames = array();
@@ -169,6 +172,7 @@ foreach ($submissions as $submission) {
 		$authorNames[] = $givenName . ' ' . $surname;
 	}
 	$authorName = implode(', ', $authorNames);
+	$orcid = $author->getOrcid();
 
 	
 
@@ -203,14 +207,14 @@ foreach ($submissions as $submission) {
 		  $xmlContent .= '<person_name sequence="first" contributor_role="author">';      
 		  $xmlContent .= '<given_name>' . htmlspecialchars($givenName) . '</given_name>';
 		  $xmlContent .= '<surname>' . htmlspecialchars($surname) . '</surname>';      
-		  $xmlContent .= '<ORCID>https://orcid.org/0000-0002-3022-8423</ORCID>';    
+		  $xmlContent .= '<ORCID>' . htmlspecialchars($orcid) . '</ORCID>';    
 		  $xmlContent .= '</person_name>';    
 					//segundo autor
 					$xmlContent .= '<person_name sequence="additional" contributor_role="author">';
-					$xmlContent .= '<given_name>Nathalia Tami</given_name>';
-					$xmlContent .= '<surname>Nishida</surname>';
+					$xmlContent .= '<given_name>nome segundo</given_name>';
+					$xmlContent .= '<surname>sobrenome segundo</surname>';
 					$xmlContent .= '</person_name>';     
-					$xmlContent .= '<organization sequence="additional" contributor_role="author">' . htmlspecialchars($afiliation) . '</organization>';
+					$xmlContent .= '<organization sequence="additional" contributor_role="author"> afiliação segundo</organization>';
 					$xmlContent .= '</contributors>';  
 		
 				  $xmlContent .= '<titles>';    
@@ -222,15 +226,16 @@ foreach ($submissions as $submission) {
 				  $xmlContent .= '</jats:abstract>';  
 		
 				  $xmlContent .= '<publication_date media_type="online">';     
-				  $xmlContent .= '<month>07</month>';    
-				  $xmlContent .= '<day>09</day>';     
+				  $xmlContent .= '<month>' . htmlspecialchars($publicationMonth) . '</month>';    
+				  $xmlContent .= '<day>' . htmlspecialchars($publicationDay) . '</day>';     
 				  $xmlContent .= '<year>' . htmlspecialchars($publicationYear) . '</year>';   
 				  $xmlContent .= '</publication_date>';  
 		
 				  $xmlContent .= '<isbn>9788566404289</isbn>';  
 				
 				$xmlContent .= '<publisher>';   
-				$xmlContent .= '<publisher_name>C O P Y R I G H T</publisher_name>';   
+				//copyright
+				$xmlContent .= '<publisher_name>' . htmlspecialchars($copyright) . '</publisher_name>';   
 				$xmlContent .= '</publisher>';   
 		
 				$xmlContent .= '<doi_data>';     
