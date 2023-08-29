@@ -74,6 +74,7 @@ class exml extends ImportExportPlugin2 {
 					);
 					import('lib.pkp.classes.file.FileManager');
 					$fileManager = new FileManager();
+					//'monographs' aparece no nome do arquivo .xml
 					$exportFileName = $this->getExportFileName($this->getExportPath(), 'monographs', $context, '.xml');
 					$fileManager->writeFile($exportFileName, $exportXml);
 					$fileManager->downloadByPath($exportFileName);
@@ -91,11 +92,7 @@ class exml extends ImportExportPlugin2 {
 
 
 
-	/**
-	 * Get the name of this plugin. The name must be unique within
-	 * its category.
-	 * @return String name of plugin
-	 */
+	// forma o link de acesso a ferramenta
 	function getName() {
 		return 'exml';
 	}
@@ -116,9 +113,7 @@ class exml extends ImportExportPlugin2 {
 		return __('plugins.importexport.exml.description');
 	}
 
-	/**
-	 * @copydoc ImportExportPlugin::getPluginSettingsPrefix()
-	 */
+	//forma o prefixo do arquivo .xml
 	function getPluginSettingsPrefix() {
 		return 'exml';
 	}
@@ -145,6 +140,9 @@ class exml extends ImportExportPlugin2 {
 foreach ($submissions as $submission) {
 	// Obtendo o título da submissão
 	$submissionTitle = $submission->getLocalizedFullTitle();
+	//obtendo o tipo de conteudo, capitulo e monografia
+	$types = [1=>"chapter", 2=>"monograph",];
+	$type = $submission->getWorkType();
 	
 	$abstract = $submission->getLocalizedAbstract();
 	$doi = $submission->getStoredPubId('doi'); 
@@ -155,6 +153,8 @@ foreach ($submissions as $submission) {
 	$publicationYear = date('Y', strtotime($publicationDate));
 	$publicationMonth = date('m', strtotime($publicationDate));
 	$publicationDay = date('d', strtotime($publicationDate));
+	//timestamp
+	$timestamp = date("Y-m-d-g:i ");
 
 	// aqui retorna xx_XX$submissionLanguage = $submission->getLocale();
 	$submissionLanguage = substr($submission->getLocale(), 0, 2); //aqui retorna xx
@@ -186,6 +186,10 @@ foreach ($submissions as $submission) {
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 		xmlns:jats="http://www.ncbi.nlm.nih.gov/JATS1" 
 		xsi:schemaLocation="http://www.crossref.org/schema/4.4.2 http://www.crossref.org/schema/deposit/crossref4.4.2.xsd">';
+
+		
+		$xmlContent .='<TESTE>' . $timestamp . '</TESTE>'; 
+
 		
 		$xmlContent .= '<head>';
 		$xmlContent .= '<doi_batch_id>ba60f6118992d8a5a2-5a37</doi_batch_id>';
@@ -200,7 +204,7 @@ foreach ($submissions as $submission) {
 
 		//primeiro autor
 		  $xmlContent .= '<body>';
-		  $xmlContent .= '<book book_type="monograph">';
+		  $xmlContent .= '<book book_type="' . htmlspecialchars($types[$type]) . '">';
 		  $xmlContent .= '<book_metadata>';  
 		  $xmlContent .= '<contributors>';      
 		  $xmlContent .= '<organization sequence="first" contributor_role="author">' . htmlspecialchars($afiliation) . '</organization>';    
