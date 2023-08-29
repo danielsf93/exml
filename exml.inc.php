@@ -26,88 +26,6 @@ class exml extends ImportExportPlugin2 {
 
 
 
-/////
-
-
-function getContextSpecificPluginSettingsFile() {
-	return $this->getPluginPath() . '/settings.xml';
-}
-
-
-public function getContents($templateMgr, $request = null)
-	{
-		$context = Application::get()->getRequest()->getContext();
-		$contextId = ($context && $context->getId()) ? $context->getId() : CONTEXT_SITE;
-		$templateMgr->assign('campo01', $this->getSetting($contextId, 'campo01'));
-		$templateMgr->assign('campo02', $this->getSetting($contextId, 'campo02'));
-
-		return parent::getContents($templateMgr, $request);
-	}
-
-
-	public function getActions($request, $actionArgs)
-	{
-		$actions = parent::getActions($request, $actionArgs);
-		if (!$this->getEnabled()) {
-			return $actions;
-		}
-		$router = $request->getRouter();
-		import('lib.pkp.classes.linkAction.request.AjaxModal');
-		$linkAction = new LinkAction(
-			'settings',
-			new AjaxModal(
-				$router->url(
-					$request,
-					null,
-					null,
-					'manage',
-					null,
-					array(
-						'verb' => 'settings',
-						'plugin' => $this->getName(),
-						'category' => 'importexport'
-					)
-				),
-				$this->getDisplayName()
-			),
-			__('manager.plugins.settings'),
-			null
-		);
-		array_unshift($actions, $linkAction);
-		return $actions;
-	}
-
-
-	public function manage($args, $request)
-	{
-		switch ($request->getUserVar('verb')) {
-			case 'settings':
-				$this->import('exmlSettingsForm');
-				$form = new exmlSettingsForm($this);
-				if (!$request->getUserVar('save')) {
-					$form->initData();
-					return new JSONMessage(true, $form->fetch($request));
-				}
-				$form->readInputData();
-				if ($form->validate()) {
-					$form->execute();
-					return new JSONMessage(true);
-				}
-		}
-		return parent::manage($args, $request);
-	}
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -259,86 +177,76 @@ foreach ($submissions as $submission) {
 /********************************************		ESTRUTURA XML		********************************************/		
 		//---início estrutura xml
 
-		$xmlContent = '<?xml version="1.0" encoding="UTF-8"?>';
-		$xmlContent .= '<doi_batch xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"';
-		$xmlContent .= ' xsi:schemaLocation="http://www.crossref.org/schema/5.3.0 https://www.crossref.org/schemas/crossref5.3.0.xsd"';
-		$xmlContent .= ' xmlns="http://www.crossref.org/schema/5.3.0" xmlns:jats="http://www.ncbi.nlm.nih.gov/JATS1"';
-		$xmlContent .= ' xmlns:fr="http://www.crossref.org/fundref.xsd" xmlns:mml="http://www.w3.org/1998/Math/MathML"';
-		$xmlContent .= ' version="5.3.0">';
+		$xmlContent = '<?xml version="1.0" encoding="UTF-8"?>
+		<doi_batch version="4.4.2" xmlns="http://www.crossref.org/schema/4.4.2" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xmlns:jats="http://www.ncbi.nlm.nih.gov/JATS1" 
+		xsi:schemaLocation="http://www.crossref.org/schema/4.4.2 http://www.crossref.org/schema/deposit/crossref4.4.2.xsd">';
 		
-		//---head
 		$xmlContent .= '<head>';
-			$xmlContent .= '<doi_batch_id>test.x</doi_batch_id>';
-			$xmlContent .= '<timestamp>2021010100000000</timestamp>';
-			$xmlContent .= '<depositor>';
-				$xmlContent .= '<depositor_name>Crossref</depositor_name>';
-				$xmlContent .= '<email_address>pfeeney@crossref.org</email_address>';
-			$xmlContent .= '</depositor>';
-			$xmlContent .= '<registrant>' . htmlspecialchars($registrant) . '</registrant>';
+		$xmlContent .= '<doi_batch_id>ba60f6118992d8a5a2-5a37</doi_batch_id>';
+		$xmlContent .= '<timestamp>20230824091240205</timestamp>';
+		$xmlContent .= '<depositor>';
+		$xmlContent .= '<depositor_name>sibi:sibi</depositor_name> ';
+		$xmlContent .= '<email_address>dgcd@abcd.usp.br</email_address>';
+		$xmlContent .= '</depositor>';
+		$xmlContent .= '<registrant>WEB-FORM</registrant>';
 		$xmlContent .= '</head>';
 		
-		//---body
-		$xmlContent .= '<body>';
-			$xmlContent .= '<book book_type="monograph">';
-				$xmlContent .= '<book_metadata language="' . htmlspecialchars($submissionLanguage) . '">';
-				//---contributors
-			$xmlContent .= '<contributors>';
-				$xmlContent .= '<person_name sequence="first" contributor_role="author">';
-					$xmlContent .= '<given_name>' . htmlspecialchars($givenName) . '</given_name>';
-					$xmlContent .= '<surname>' . htmlspecialchars($surname) . '</surname>';
-					$xmlContent .= '<affiliations>';
-						$xmlContent .= '<institution>';
-							$xmlContent .= '<institution_name>' . htmlspecialchars($afiliation) . '</institution_name>';
-						$xmlContent .= '</institution>';
-						$xmlContent .= '<institution>';
-							$xmlContent .= '<institution_id type="ror">https://ror.org/036rp1748</institution_id>';
-						$xmlContent .= '</institution>';
-					$xmlContent .= '</affiliations>';
-				$xmlContent .= '</person_name>';
-			$xmlContent .= '</contributors>';
-					
-			
-					
-					//---titles
-					$xmlContent .= '<titles>';
-						$xmlContent .= '<title>' . htmlspecialchars($submissionTitle) . '</title>';
-					$xmlContent .= '</titles>';
-					//----abstract 
-					$xmlContent .= '<jats:abstract> <jats:p>' . htmlspecialchars($abstract) . '</jats:p> </jats:abstract>';
 
-					$xmlContent .= '<edition_number>' . htmlspecialchars($editionNumber) .  '</edition_number>';
-					$xmlContent .= '<publication_date media_type="print">';
-						$xmlContent .= '<year>' . htmlspecialchars($publicationYear) . '</year>';
-					$xmlContent .= '</publication_date>';
-					$xmlContent .= '<isbn media_type="electronic">1596680547</isbn>';
-					$xmlContent .= '<isbn media_type="print">9789000002191</isbn>';
-						$xmlContent .= '<publisher>';
-							$xmlContent .= '<publisher_name>' . htmlspecialchars($publisherName) . '</publisher_name>';
-						$xmlContent .= '</publisher>';
-					$xmlContent .= '<doi_data>';
-						$xmlContent .= '<doi>' . htmlspecialchars($doi) . '</doi>';
-						$xmlContent .= '<resource>' . htmlspecialchars($publicationUrl) . '</resource>';
-					$xmlContent .= '</doi_data>';
-				$xmlContent .= '</book_metadata>';
+		//primeiro autor
+		  $xmlContent .= '<body>';
+		  $xmlContent .= '<book book_type="monograph">';
+		  $xmlContent .= '<book_metadata>';  
+		  $xmlContent .= '<contributors>';      
+		  $xmlContent .= '<organization sequence="first" contributor_role="author">' . htmlspecialchars($afiliation) . '</organization>';    
+		  $xmlContent .= '<person_name sequence="first" contributor_role="author">';      
+		  $xmlContent .= '<given_name>' . htmlspecialchars($givenName) . '</given_name>';
+		  $xmlContent .= '<surname>' . htmlspecialchars($surname) . '</surname>';      
+		  $xmlContent .= '<ORCID>https://orcid.org/0000-0002-3022-8423</ORCID>';    
+		  $xmlContent .= '</person_name>';    
+					//segundo autor
+					$xmlContent .= '<person_name sequence="additional" contributor_role="author">';
+					$xmlContent .= '<given_name>Nathalia Tami</given_name>';
+					$xmlContent .= '<surname>Nishida</surname>';
+					$xmlContent .= '</person_name>';     
+					$xmlContent .= '<organization sequence="additional" contributor_role="author">' . htmlspecialchars($afiliation) . '</organization>';
+					$xmlContent .= '</contributors>';  
+		
+				  $xmlContent .= '<titles>';    
+				  $xmlContent .= '<title>' . htmlspecialchars($submissionTitle) . '</title>';
+				  $xmlContent .= '</titles>';
+		
+				  $xmlContent .= '<jats:abstract xml:lang="' . htmlspecialchars($submissionLanguage) . '">';
+				  $xmlContent .= '<jats:p>' . htmlspecialchars($abstract) . '</jats:p>';
+				  $xmlContent .= '</jats:abstract>';  
+		
+				  $xmlContent .= '<publication_date media_type="online">';     
+				  $xmlContent .= '<month>07</month>';    
+				  $xmlContent .= '<day>09</day>';     
+				  $xmlContent .= '<year>' . htmlspecialchars($publicationYear) . '</year>';   
+				  $xmlContent .= '</publication_date>';  
+		
+				  $xmlContent .= '<isbn>9788566404289</isbn>';  
+				
+				$xmlContent .= '<publisher>';   
+				$xmlContent .= '<publisher_name>C O P Y R I G H T</publisher_name>';   
+				$xmlContent .= '</publisher>';   
+		
+				$xmlContent .= '<doi_data>';     
+				$xmlContent .= '<doi>' . htmlspecialchars($doi) . '</doi>';     
+				$xmlContent .= '<resource>' . htmlspecialchars($publicationUrl) . '</resource>';
+				$xmlContent .= '</doi_data>'; 
+			  $xmlContent .= '</book_metadata>';
 			$xmlContent .= '</book>';
-		$xmlContent .= '</body>';
-
-/////tag para testes
-
-	//$xmlContent .= '<teste>';
-	//$xmlContent .= 'aaa' . htmlspecialchars($publisherName) . 'bbb';
-	//$xmlContent .= '</teste>';
+		
+			$xmlContent .= '</body>';
+		$xmlContent .= '</doi_batch>';
 		
 
-
-
-
-
-		
-////fInal final tag para testes
 		}
 
-		$xmlContent .= '</doi_batch>';
+		
 
 
 

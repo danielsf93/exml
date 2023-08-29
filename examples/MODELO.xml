@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doi_batch version="4.4.2" xmlns="http://www.crossref.org/schema/4.4.2" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns:jats="http://www.ncbi.nlm.nih.gov/JATS1" 
+xsi:schemaLocation="http://www.crossref.org/schema/4.4.2 http://www.crossref.org/schema/deposit/crossref4.4.2.xsd">
+  <head>
+    <doi_batch_id>ba60f6118992d8a5a2-5a37</doi_batch_id>
+    <timestamp>20230824091240205</timestamp>
+    <depositor>
+      <depositor_name>sibi:sibi</depositor_name> 
+      <email_address>dgcd@abcd.usp.br</email_address>
+    </depositor>
+    <registrant>WEB-FORM</registrant> 
+  </head>
+
+  <body>
+    <book book_type='monograph'> 
+      <book_metadata>   
+          <contributors>      
+            <organization sequence='first' contributor_role='author'>Universidade de São Paulo. Faculdade de Zootecnia e Engenharia de Alimentos</organization>    
+            <person_name sequence='first' contributor_role='author'>      
+              <given_name>Lilian Elgalise Techio</given_name>      
+              <surname>Pereira</surname>      
+              <ORCID>https://orcid.org/0000-0002-3022-8423</ORCID>    
+            </person_name>    
+            
+            <person_name sequence='additional' contributor_role='author'>       
+              <given_name>Nathalia Tami</given_name>       
+              <surname>Nishida</surname>     
+            </person_name>     
+            <organization sequence='additional' contributor_role='author'>Universidade de São Paulo. Faculdade de Zootecnia e Engenharia de Alimentos</organization>     
+          </contributors>  
+
+        <titles>     
+          <title>Recomendações para correção e adubação de pastagens tropicais</title>   
+        </titles>
+
+        <jats:abstract xml:lang='pt'>         
+          <jats:p>O objetivo da obra é fornecer instruções, de maneira simples e prática, para correção e adubação de pastagens tropicais. A elaboração deste livro é uma das iniciativas de ampliação no acesso à informação e transferência de tecnologia, desenvolvida pelo Grupo de Estudos em Forragicultura e Pastagens (GEFEP) da Faculdade de Zootecnia e Engenharia de Alimentos (FZEA-USP). Os autores esperam que essa iniciativa possa colaborar para o desenvolvimento dos sistemas produtivos na região, contribuir para a recuperação das pastagens e, ainda, oportunizar melhorias em produtividade e persistência das gramíneas tropicais.</jats:p>     
+        </jats:abstract>  
+
+        <publication_date media_type='online'>     
+          <month>07</month>     
+          <day>09</day>     
+          <year>2021</year>   
+        </publication_date>  
+
+        <isbn>9788566404289</isbn>  
+        
+        <publisher>   
+        <publisher_name>Universidade de São Paulo. Faculdade de Zootecnia e Engenharia de Alimentos</publisher_name>   
+        </publisher>   
+
+        <doi_data>     
+        <doi>10.11606/9788566404289</doi>     
+        <resource>https://www.livrosabertos.sibi.usp.br/portaldelivrosUSP/catalog/book/251</resource>   
+        </doi_data> 
+      </book_metadata>
+    </book>
+
+  </body>
+</doi_batch>
