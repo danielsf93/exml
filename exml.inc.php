@@ -154,7 +154,7 @@ foreach ($submissions as $submission) {
 	$publicationMonth = date('m', strtotime($publicationDate));
 	$publicationDay = date('d', strtotime($publicationDate));
 	//timestamp
-	$timestamp = date("Y-m-d-g:i ");
+	$timestamp = date("YmdHis") . substr((string)microtime(), 2, 3);
 
 	// aqui retorna xx_XX$submissionLanguage = $submission->getLocale();
 	$submissionLanguage = substr($submission->getLocale(), 0, 2); //aqui retorna xx
@@ -188,12 +188,12 @@ foreach ($submissions as $submission) {
 		xsi:schemaLocation="http://www.crossref.org/schema/4.4.2 http://www.crossref.org/schema/deposit/crossref4.4.2.xsd">';
 
 		
-		$xmlContent .='<TESTE>' . $timestamp . '</TESTE>'; 
+		//$xmlContent .='<TESTE>' . $timestamp . '</TESTE>'; 
 
 		
 		$xmlContent .= '<head>';
 		$xmlContent .= '<doi_batch_id>ba60f6118992d8a5a2-5a37</doi_batch_id>';
-		$xmlContent .= '<timestamp>20230824091240205</timestamp>';
+		$xmlContent .= '<timestamp>' . $timestamp . '</timestamp>';
 		$xmlContent .= '<depositor>';
 		$xmlContent .= '<depositor_name>sibi:sibi</depositor_name> ';
 		$xmlContent .= '<email_address>dgcd@abcd.usp.br</email_address>';
