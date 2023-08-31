@@ -135,7 +135,17 @@ class exml extends ImportExportPlugin2 {
 		
 /********************************************		FOREACH'S	********************************************/
 
-
+$authorsInfo = array();
+$authors = $submission->getAuthors();
+foreach ($authors as $author) {
+    $authorInfo = array(
+        'givenName' => $author->getLocalizedGivenName(),
+        'surname' => $author->getLocalizedFamilyName(),
+        'afiliation' => $author->getLocalizedAffiliation(),
+        'orcid' => $author->getOrcid()
+    );
+    $authorsInfo[] = $authorInfo;
+}
 
 foreach ($submissions as $submission) {
 	// Obtendo o título da submissão
@@ -204,25 +214,38 @@ foreach ($submissions as $submission) {
 		$xmlContent .= '</head>';
 		
 
-		//primeiro autor
 		  $xmlContent .= '<body>';
 		  $xmlContent .= '<book book_type="' . htmlspecialchars($types[$type]) . '">';
-		  $xmlContent .= '<book_metadata>';  
-		  $xmlContent .= '<contributors>';      
-		  $xmlContent .= '<organization sequence="first" contributor_role="author">' . htmlspecialchars($afiliation) . '</organization>';    
-		  $xmlContent .= '<person_name sequence="first" contributor_role="author">';      
-		  $xmlContent .= '<given_name>' . htmlspecialchars($givenName) . '</given_name>';
-		  $xmlContent .= '<surname>' . htmlspecialchars($surname) . '</surname>';      
-		  $xmlContent .= '<ORCID>' . htmlspecialchars($orcid) . '</ORCID>';    
-		  $xmlContent .= '</person_name>';    
-					//segundo autor
-					$xmlContent .= '<person_name sequence="additional" contributor_role="author">';
-					$xmlContent .= '<given_name>nome segundo</given_name>';
-					$xmlContent .= '<surname>sobrenome segundo</surname>';
-					$xmlContent .= '</person_name>';     
-					$xmlContent .= '<organization sequence="additional" contributor_role="author"> afiliação segundo</organization>';
-					$xmlContent .= '</contributors>';  
+		  $xmlContent .= '<book_metadata>'; 
+
+		  $xmlContent .= '<contributors>';  
+
+				//AUTORES:
+				// Primeiro autor
+				$firstAuthor = reset($authorsInfo);
+				$xmlContent .= '<organization sequence="first" contributor_role="author">' . htmlspecialchars($firstAuthor['afiliation']) . '</organization>';
+				$xmlContent .= '<person_name sequence="first" contributor_role="author">';
+				$xmlContent .= '<given_name>' . htmlspecialchars($firstAuthor['givenName']) . '</given_name>';
+				$xmlContent .= '<surname>' . htmlspecialchars($firstAuthor['surname']) . '</surname>';
+				$xmlContent .= '<ORCID>' . htmlspecialchars($firstAuthor['orcid']) . '</ORCID>';
+				$xmlContent .= '</person_name>'; 
+				// Autores adicionais
+				foreach ($authorsInfo as $index => $authorInfo) {
+					if ($index > 0) {
+						$xmlContent .= '<person_name sequence="additional" contributor_role="author">';
+						$xmlContent .= '<given_name>' . htmlspecialchars($authorInfo['givenName']) . '</given_name>';
+						$xmlContent .= '<surname>' . htmlspecialchars($authorInfo['surname']) . '</surname>';
+						$xmlContent .= '<ORCID>' . htmlspecialchars($authorInfo['orcid']) . '</ORCID>';
+						$xmlContent .= '</person_name>';
+						$xmlContent .= '<organization sequence="additional" contributor_role="author">' . htmlspecialchars($authorInfo['afiliation']) . '</organization>';
+					}
+				}
+		  $xmlContent .= '</contributors>';  
 		
+
+
+
+					
 				  $xmlContent .= '<titles>';    
 				  $xmlContent .= '<title>' . htmlspecialchars($submissionTitle) . '</title>';
 				  $xmlContent .= '</titles>';
