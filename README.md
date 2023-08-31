@@ -9,10 +9,8 @@ Após instalado, acesso em http:seusite.org/index.php/suaeditora/management/impo
 
 <br><br>Baseado em Native, Datacite e Crossref plugin.
 <br><br> #falta:
-<br>- Verificar tags existentes
+<br>- Verificar tag isbn
 <br>- Form de depositante
-<br>- Regras para mais de 1 autor
-<br>- Confirmar modelo
 <br>- feedback da equipe técnica.
 
 
