@@ -153,6 +153,8 @@ class exml extends ImportExportPlugin2
             $types = [1 => 'chapter', 2 => 'monograph'];
             $type = $submission->getWorkType();
 
+            //$xablau = $submission->getStoredPubId('isbn');
+
             $abstract = $submission->getLocalizedAbstract();
             $doi = $submission->getStoredPubId('doi');
             $publicationUrl = $request->url($context->getPath(), 'catalog', 'book', [$submission->getId()]);
@@ -192,7 +194,7 @@ class exml extends ImportExportPlugin2
 		xmlns:jats="http://www.ncbi.nlm.nih.gov/JATS1" 
 		xsi:schemaLocation="http://www.crossref.org/schema/4.4.2 http://www.crossref.org/schema/deposit/crossref4.4.2.xsd">';
 
-            //$xmlContent .='<TESTE>' . $timestamp . '</TESTE>';
+            //$xmlContent .= '<TESTE>'.$xablau.'</TESTE>';
 
             $xmlContent .= '<head>';
             //segundo documentação, doi_batch_id pode ser o proprio nome da publicação: https://www.crossref.org/documentation/register-maintain-records/verify-your-registration/submission-queue-and-log/
@@ -256,7 +258,10 @@ class exml extends ImportExportPlugin2
             $xmlContent .= '<year>'.htmlspecialchars($publicationYear).'</year>';
             $xmlContent .= '</publication_date>';
 
-            $xmlContent .= '<isbn>9788566404289</isbn>';
+            //$isbn = $submission->getLocalizedISBN();
+            //falta essa parte
+            $isbn = '997-65-43210-12-3';
+            $xmlContent .= '<isbn>'.htmlspecialchars($isbn).'</isbn>';
 
             $xmlContent .= '<publisher>';
             //copyright
