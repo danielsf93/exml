@@ -235,7 +235,9 @@ foreach ($submissions as $submission) {
 						$xmlContent .= '<person_name sequence="additional" contributor_role="author">';
 						$xmlContent .= '<given_name>' . htmlspecialchars($authorInfo['givenName']) . '</given_name>';
 						$xmlContent .= '<surname>' . htmlspecialchars($authorInfo['surname']) . '</surname>';
-						$xmlContent .= '<ORCID>' . htmlspecialchars($authorInfo['orcid']) . '</ORCID>';
+						if (!empty($authorInfo['orcid'])) {
+							$xmlContent .= '<ORCID>' . htmlspecialchars($authorInfo['orcid']) . '</ORCID>';
+						}
 						$xmlContent .= '</person_name>';
 						$xmlContent .= '<organization sequence="additional" contributor_role="author">' . htmlspecialchars($authorInfo['afiliation']) . '</organization>';
 					}
