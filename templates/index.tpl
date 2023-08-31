@@ -38,13 +38,18 @@
     {fbvFormArea}
         <div class="pkp_notification">
             <div class="notifyWarning">
-                {translate key="Bem vindo ao plugin FORM."}
+               <b> {translate key="Plugin de exportação eXML."}</b><br>
+			   -Adicione as informações como login e email de depositant crossref.<br>
+			   -Selecione a publicação a ser baixada e clique em exportar.<br>
+			   -Acesse a <a href="https://doi.crossref.org/servlet/useragent" target="_blank">ferramenta de deposito manual da Crossref </a>para depositar o arquivo xml.
+			   <br><br>Se possuir dúvidas sobre a ferramenta, acesse o 
+			   <a href="https://www.crossref.org/documentation/register-maintain-records/direct-deposit-xml/admin-tool/" target="_blank"> manual da Crossref </a>
             </div>
         </div>
-		{fbvFormSection title="Descrição campo01:"}
+		{fbvFormSection title="depositor_name:"}
 			{fbvElement type="text" id="campo01" value=$campo01}
 		{/fbvFormSection}
-		{fbvFormSection title="Descrição campo02:"}
+		{fbvFormSection title="email_address:"}
 			{fbvElement type="text" id="campo02" value=$campo02}
             
 		

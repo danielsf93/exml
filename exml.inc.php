@@ -192,7 +192,9 @@ foreach ($submissions as $submission) {
 
 		
 		$xmlContent .= '<head>';
-		$xmlContent .= '<doi_batch_id>ba60f6118992d8a5a2-5a37</doi_batch_id>';
+		//segundo documentação, doi_batch_id pode ser o proprio nome da publicação: https://www.crossref.org/documentation/register-maintain-records/verify-your-registration/submission-queue-and-log/
+		//$xmlContent .= '<doi_batch_id>ba60f6118992d8a5a2-5a37</doi_batch_id>';
+		$xmlContent .= '<doi_batch_id>' . htmlspecialchars($submissionTitle) . '</doi_batch_id>';
 		$xmlContent .= '<timestamp>' . $timestamp . '</timestamp>';
 		$xmlContent .= '<depositor>';
 		$xmlContent .= '<depositor_name>sibi:sibi</depositor_name> ';
