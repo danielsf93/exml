@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+		<doi_batch version="4.4.2" xmlns="http://www.crossref.org/schema/4.4.2" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xmlns:jats="http://www.ncbi.nlm.nih.gov/JATS1" 
+		xsi:schemaLocation="http://www.crossref.org/schema/4.4.2 http://www.crossref.org/schema/deposit/crossref4.4.2.xsd"><head><doi_batch_id>Capitulo</doi_batch_id><timestamp>20230901115723918</timestamp><depositor><depositor_name>sibi:sibi</depositor_name> <email_address>dgcd@abcd.usp.br</email_address></depositor><registrant>WEB-FORM</registrant></head><body><book book_type="other"><book_metadata><contributors><organization sequence="additional" contributor_role="author">fflch</organization><person_name sequence="first" contributor_role="author"><given_name>Cobra</given_name><surname>Coral</surname><ORCID>https://orcid.org/0000-0002-4132-2255</ORCID></person_name></contributors><titles><title>Capitulo</title></titles><jats:abstract xml:lang="en"><jats:p>&lt;p&gt;resumo Capitulo&lt;/p&gt;
+&lt;p&gt;resumo Capitulo&lt;/p&gt;
+&lt;p&gt;resumo Capitulo&lt;/p&gt;
+&lt;p&gt;resumo Capitulo&lt;/p&gt;
+&lt;p&gt;resumo Capitulo&lt;/p&gt;
+&lt;p&gt;resumo Capitulo&lt;/p&gt;
+&lt;p&gt;resumo Capitulo&lt;/p&gt;</jats:p></jats:abstract><publication_date media_type="online"><month>07</month><day>09</day><year>2021</year></publication_date><isbn>997-65-43210-12-3</isbn><publisher><publisher_name>plplpl</publisher_name></publisher><doi_data><doi>10.4321/geo.12</doi><resource>http://0.0.0.0:8888/index.php/geo/catalog/book/12</resource></doi_data></book_metadata></book></body></doi_batch>
