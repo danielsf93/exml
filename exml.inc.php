@@ -156,8 +156,6 @@ class exml extends ImportExportPlugin2
             $types = [1 => 'other', 2 => 'monograph', 3 => 'other', 4 => 'other'];
             $type = $submission->getWorkType();
 
-            //$xablau = $submission->getStoredPubId('isbn'); //teste para captura de isbn
-
             $abstract = $submission->getLocalizedAbstract();
             $doi = $submission->getStoredPubId('doi');
             $publicationUrl = $request->url($context->getPath(), 'catalog', 'book', [$submission->getId()]);
@@ -263,9 +261,19 @@ class exml extends ImportExportPlugin2
             $xmlContent .= '<year>'.htmlspecialchars($publicationYear).'</year>';
             $xmlContent .= '</publication_date>';
 
-            //$isbn = $submission->getLocalizedISBN();
-            //falta essa parte - problema relatado, em investigação.
-            $isbn = '997-65-43210-12-3';
+            //ISBN
+            $isbn = '';
+            $publicationFormats = $submission->getCurrentPublication()->getData('publicationFormats');
+            foreach ($publicationFormats as $publicationFormat) {
+                $identificationCodes = $publicationFormat->getIdentificationCodes();
+                while ($identificationCode = $identificationCodes->next()) {
+                    if ($identificationCode->getCode() == '02' || $identificationCode->getCode() == '15') {
+                        // 02 e 15: códigos ONIX para ISBN-10 ou ISBN-13
+                        $isbn = $identificationCode->getValue();
+                        break; // Encerra o loop ao encontrar o ISBN
+                    }
+                }
+            }
             $xmlContent .= '<isbn>'.htmlspecialchars($isbn).'</isbn>';
 
             $xmlContent .= '<publisher>';
