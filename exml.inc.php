@@ -1,8 +1,8 @@
 <?php
 
-import('lib.pkp.classes.plugins.ImportExportPlugin');
+import('plugins.importexport.exml.lib.pkp.classes.plugins.ImportExportPlugin');
 
-class exml extends ImportExportPlugin
+class exml extends ImportExportPlugin2
 {
     /**
      * Constructor.
