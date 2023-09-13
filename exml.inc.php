@@ -1,8 +1,8 @@
 <?php
 
-import('plugins.importexport.exml.lib.pkp.classes.plugins.ImportExportPlugin');
+import('lib.pkp.classes.plugins.ImportExportPlugin');
 
-class exml extends ImportExportPlugin2
+class exml extends ImportExportPlugin
 {
     /**
      * Constructor.
@@ -39,6 +39,7 @@ class exml extends ImportExportPlugin2
         $templateMgr->assign('plugin', $this);
 
         switch (array_shift($args)) {
+            //aqui monta a página do plugin
             case 'index':
             case '':
                 $apiUrl = $request->getDispatcher()->url($request, ROUTE_API, $context->getPath(), 'submissions');
@@ -65,6 +66,7 @@ class exml extends ImportExportPlugin2
                 ]);
                 $templateMgr->display($this->getTemplateResource('index.tpl'));
                 break;
+                //aqui exporta o livro
                 case 'export':
                     $exportXml = $this->exportSubmissions(
                         (array) $request->getUserVar('selectedSubmissions'),
@@ -80,7 +82,7 @@ class exml extends ImportExportPlugin2
                     $fileManager->downloadByPath($exportFileName);
                     $fileManager->deleteByPath($exportFileName);
                     break;
-
+//Parte responsávle pelo form
                     case 'settings':
                         $this->getSettings($templateMgr);
                         $this->updateSettings();
@@ -124,6 +126,7 @@ class exml extends ImportExportPlugin2
         return 'exml';
     }
 
+    //parte do form
     public function getSettings(TemplateManager $templateMgr): array
     {
         $request = $this->getRequest();
@@ -142,6 +145,7 @@ class exml extends ImportExportPlugin2
         return $data;
     }
 
+    //parte do form
     private function updateSettings(): void
     {
         $request = $this->getRequest();
@@ -224,6 +228,19 @@ class exml extends ImportExportPlugin2
             $authorName = implode(', ', $authorNames);
             $orcid = $author->getOrcid();
 
+            $isbn = '';
+            $publicationFormats = $submission->getCurrentPublication()->getData('publicationFormats');
+            foreach ($publicationFormats as $publicationFormat) {
+                $identificationCodes = $publicationFormat->getIdentificationCodes();
+                while ($identificationCode = $identificationCodes->next()) {
+                    if ($identificationCode->getCode() == '02' || $identificationCode->getCode() == '15') {
+                        // 02 e 15: códigos ONIX para ISBN-10 ou ISBN-13
+                        $isbn = $identificationCode->getValue();
+                        break; // Encerra o loop ao encontrar o ISBN
+                    }
+                }
+            }
+
             /*
              *
              * ESTRUTURA XML
@@ -244,7 +261,7 @@ class exml extends ImportExportPlugin2
             $xmlContent .= '<doi_batch_id>'.htmlspecialchars($submissionTitle).'</doi_batch_id>';
             $xmlContent .= '<timestamp>'.$timestamp.'</timestamp>';
             $xmlContent .= '<depositor>';
-            //por hora em hardcoding - buscando solução para obter info via form
+            //por hora em hardcoding - buscando solução para obter info via form de depositor e email
             $xmlContent .= '<depositor_name>sibi:sibi</depositor_name> ';
             $xmlContent .= '<email_address>dgcd@abcd.usp.br</email_address>';
             $xmlContent .= '</depositor>';
@@ -300,19 +317,6 @@ class exml extends ImportExportPlugin2
             $xmlContent .= '<year>'.htmlspecialchars($publicationYear).'</year>';
             $xmlContent .= '</publication_date>';
 
-            //ISBN
-            $isbn = '';
-            $publicationFormats = $submission->getCurrentPublication()->getData('publicationFormats');
-            foreach ($publicationFormats as $publicationFormat) {
-                $identificationCodes = $publicationFormat->getIdentificationCodes();
-                while ($identificationCode = $identificationCodes->next()) {
-                    if ($identificationCode->getCode() == '02' || $identificationCode->getCode() == '15') {
-                        // 02 e 15: códigos ONIX para ISBN-10 ou ISBN-13
-                        $isbn = $identificationCode->getValue();
-                        break; // Encerra o loop ao encontrar o ISBN
-                    }
-                }
-            }
             $xmlContent .= '<isbn>'.htmlspecialchars($isbn).'</isbn>';
 
             $xmlContent .= '<publisher>';
