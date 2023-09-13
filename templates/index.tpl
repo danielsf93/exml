@@ -15,7 +15,7 @@
 <div id="importExportTabs" class="pkp_controllers_tab">
 
 	<ul>
-	<li><a href="#config-tab">{translate key="configuraçao"}</a></li>
+	<li><a href="#exmlSettingsForm">{translate key="configuraçao"}</a></li>
 
 	<li><a href="#export-tab">{translate key="plugins.importexport.exml.exportSubmissions"}</a></li>
 	</ul>
@@ -24,43 +24,28 @@
 
 
 
-	<div id="config-tab">
-	<script>
-    $(function () {ldelim}
-        $('#exmlSettings').pkpHandler('$.pkp.controllers.form.AjaxFormHandler');
-        {rdelim});
-</script>
-
-<form class="pkp_form" id="exmlSettingsForm" method="POST" action="{url router=$smarty.const.ROUTE_COMPONENT op="manage" category="importexport" plugin="exml" verb="settings" save=true}">
-    <!-- Always add the csrf token to secure your form -->
-    {csrf}
-
-    {fbvFormArea}
-        <div class="pkp_notification">
-            <div class="notifyWarning">
-               <b> {translate key="Plugin de exportação eXML."}</b><br>
-			   -Adicione as informações como login e email de depositant crossref.<br>
-			   -Selecione a publicação a ser baixada e clique em exportar.<br>
-			   -Acesse a <a href="https://doi.crossref.org/servlet/useragent" target="_blank">ferramenta de deposito manual da Crossref </a>para depositar o arquivo xml.
-			   <br><br>Se possuir dúvidas sobre a ferramenta, acesse o 
-			   <a href="https://www.crossref.org/documentation/register-maintain-records/direct-deposit-xml/admin-tool/" target="_blank"> manual da Crossref </a>
-            </div>
-        </div>
-		{fbvFormSection title="depositor_name:"}
-			{fbvElement type="text" id="campo01" value=$campo01}
-		{/fbvFormSection}
-		{fbvFormSection title="email_address:"}
-			{fbvElement type="text" id="campo02" value=$campo02}
-            
-		
-		{/fbvFormSection}
-    {/fbvFormArea}
-    {fbvFormButtons submitText="common.save"}
-</form>
-
-
-	
-	</div>
+	<div id="exmlSettingsForm">
+			<script type="text/javascript">
+				$(function () {ldelim}
+					$('#exmlSettingsForm').pkpHandler('$.pkp.controllers.form.FormHandler');
+					{rdelim});
+			</script>
+			<form class="pkp_form" id="exmlSettingsForm" method="post"
+				  action="{plugin_url path="settings" verb="save" save=true}">
+				{csrf}
+				
+				{fbvFormArea id="exmlSettingsFormArea"}
+					
+				
+				{fbvFormSection}
+				{fbvElement type="text" id="email" value=$email label="Email" maxlength="100" size=$fbvStyles.size.MEDIUM}
+				{fbvElement type="text" id="username" value=$username label="nome de usuário" maxlength="50" size=$fbvStyles.size.MEDIUM}
+				
+				{/fbvFormSection}
+				{/fbvFormArea}
+				{fbvFormButtons submitText="common.save"}
+			</form>
+		</div>
 
 
 

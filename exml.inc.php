@@ -80,6 +80,12 @@ class exml extends ImportExportPlugin2
                     $fileManager->downloadByPath($exportFileName);
                     $fileManager->deleteByPath($exportFileName);
                     break;
+
+                    case 'settings':
+                        $this->getSettings($templateMgr);
+                        $this->updateSettings();
+                        $request->redirect(null, 'management', 'importexport', ['plugin', 'exml']);
+                        // no break
             default:
                 $dispatcher = $request->getDispatcher();
                 $dispatcher->handle404();
@@ -116,6 +122,39 @@ class exml extends ImportExportPlugin2
     public function getPluginSettingsPrefix()
     {
         return 'exml';
+    }
+
+    public function getSettings(TemplateManager $templateMgr): array
+    {
+        $request = $this->getRequest();
+        $press = $request->getContext();
+        $data = [];
+
+        if (null !== $press) {
+            $email = $this->getSetting($press->getId(), 'email');
+            $templateMgr->assign('email', $email);
+            $username = $this->getSetting($press->getId(), 'username');
+            $templateMgr->assign('username', $username);
+
+            $data = [$press, $email, $username];
+        }
+
+        return $data;
+    }
+
+    private function updateSettings(): void
+    {
+        $request = $this->getRequest();
+        $context = $request->getContext();
+        if (null !== $context) {
+            $contextId = $context->getId();
+            $userVars = $request->getUserVars();
+            if (count($userVars) > 0) {
+                $this->updateSetting($contextId, 'email', $userVars['email']);
+
+                $this->updateSetting($contextId, 'username', $userVars['username']);
+            }
+        }
     }
 
     /**
