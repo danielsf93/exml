@@ -15,7 +15,7 @@
 <div id="importExportTabs" class="pkp_controllers_tab">
 
 	<ul>
-	<li><a href="#exmlSettingsForm">{translate key="configuraçao"}</a></li>
+	<li><a href="#exmlSettingsForm">{translate key="Credenciais"}</a></li>
 
 	<li><a href="#export-tab">{translate key="plugins.importexport.exml.exportSubmissions"}</a></li>
 	</ul>
@@ -30,6 +30,17 @@
 					$('#exmlSettingsForm').pkpHandler('$.pkp.controllers.form.FormHandler');
 					{rdelim});
 			</script>
+
+<div class="pkp_notification">
+<div class="notifyWarning">
+   <b> {translate key="Plugin de exportação eXML."}</b><br>
+   -Adicione as informações como login e email de depositant crossref.<br>
+   -Selecione a publicação a ser baixada e clique em exportar.<br>
+   -Acesse a <a href="https://doi.crossref.org/servlet/useragent" target="_blank">ferramenta de deposito manual da Crossref </a>para depositar o arquivo xml.
+   <br><br>Se possuir dúvidas sobre a ferramenta, acesse o 
+   <a href="https://www.crossref.org/documentation/register-maintain-records/direct-deposit-xml/admin-tool/" target="_blank"> manual da Crossref </a>
+</div>
+</div>
 			<form class="pkp_form" id="exmlSettingsForm" method="post"
 				  action="{plugin_url path="settings" verb="save" save=true}">
 				{csrf}
@@ -39,7 +50,7 @@
 				
 				{fbvFormSection}
 				{fbvElement type="text" id="email" value=$email label="Email" maxlength="100" size=$fbvStyles.size.MEDIUM}
-				{fbvElement type="text" id="username" value=$username label="nome de usuário" maxlength="50" size=$fbvStyles.size.MEDIUM}
+				{fbvElement type="text" id="username" value=$username label="Nome de Usuário" maxlength="50" size=$fbvStyles.size.MEDIUM}
 				
 				{/fbvFormSection}
 				{/fbvFormArea}

@@ -21,7 +21,7 @@ msgid "plugins.importexport.exml.description"
 msgstr "Exportação de livros em formato XML para a crossref."
 
 msgid "plugins.importexport.exml.exportSubmissions"
-msgstr "Exportar submissões"
+msgstr "Exportar submissão"
 
 
 
