@@ -2,7 +2,7 @@
 
 import('plugins.importexport.exml.lib.pkp.classes.plugins.importexport.PKPImportExportDeployment');
 
-class exmlDeployment extends PKPImportExportDeployment2 {
+class exmlDeployment extends PKPImportExportDeployment3 {
 	/**
 	 * Constructor
 	 * @param $context Context

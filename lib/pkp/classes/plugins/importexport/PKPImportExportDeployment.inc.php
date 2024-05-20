@@ -17,7 +17,7 @@
  * application's specifics.
  */
 
-class PKPImportExportDeployment2 {
+class PKPImportExportDeployment3 {
 	/** @var Context The current import/export context */
 	var $_context;
 

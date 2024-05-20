@@ -2,7 +2,7 @@
 
 import('lib.pkp.classes.plugins.Plugin');
 
-abstract class ImportExportPlugin2 extends Plugin {
+abstract class ImportExportPlugin3 extends Plugin {
 	/** @var Request Request made available for plugin URL generation */
 	var $_request;
 

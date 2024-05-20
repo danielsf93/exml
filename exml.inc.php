@@ -2,7 +2,7 @@
 
 import('plugins.importexport.exml.lib.pkp.classes.plugins.ImportExportPlugin');
 
-class exml extends ImportExportPlugin2
+class exml extends ImportExportPlugin3
 {
     /**
      * Constructor.
